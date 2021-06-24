@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: Ansible create file with content
+    copy:
+      dest: "/tmp/morpheus_day2.txt"
+      content: |
+        morpheus and ansible day 2 operation

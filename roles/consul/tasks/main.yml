@@ -1,0 +1,36 @@
+---
+# tasks file for consul
+- name: Ensure HashiCorp yum repository exists
+  yum_repository:
+    name: "hashicorp"
+    description: "HashiCorp repository"
+    baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable"
+    gpgcheck: true
+    gpgkey: "https://rpm.releases.hashicorp.com/gpg"
+  register: _yum
+  until: _yum is succeeded
+  retries: 5
+
+- name: Install Consul Package
+  package:
+    name: "consul"
+    state: present
+  register: _pkg
+  until: _pkg is succeeded
+  retries: 5
+
+- name: Template a file to /etc/consul.d/agent.hcl
+  ansible.builtin.template:
+    src: "agent.hcl.j2"
+    dest: /etc/consul.d/agent.hcl
+
+- name: Template a file to /etc/consul.d/mongodb.hcl
+  ansible.builtin.template:
+    src: "mongodb.hcl.j2"
+    dest: /etc/consul.d/mongodb.hcl
+
+- name: Start consul service
+  service:
+    name: "consul"
+    state: started
+    enabled: yes

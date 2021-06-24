@@ -1,0 +1,12 @@
+---
+# defaults file for mongodb
+bind_ip: 0.0.0.0
+config_port: 27019
+mongodb_user: "mongod"
+mongodb_group: "mongod"
+mongod_service: "mongod"
+db_path: /var/lib/mongo
+mongodb_admin_user: root
+mongodb_admin_password: password123
+mongodb_version: "4.2"
+

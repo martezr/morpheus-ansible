@@ -1,0 +1,60 @@
+---
+# tasks file for mongodb
+- name: Add mongodb.org gpgkey
+  rpm_key:
+    key: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
+    state: present
+  register: _yum
+  until: _yum is succeeded
+  retries: 5
+
+- name: Ensure MongoDB yum repository exists
+  yum_repository:
+    name: "mongodb-{{ mongodb_version }}"
+    description: "Official MongoDB {{ mongodb_version }} yum repo"
+    baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/{{ mongodb_version }}/x86_64/"
+    gpgcheck: true
+    gpgkey: "https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc"
+  register: _yum
+  until: _yum is succeeded
+  retries: 5
+
+- name: Install MongoDB Packages
+  package:
+    name: "mongodb-org"
+    state: present
+  register: _pkg
+  until: _pkg is succeeded
+  retries: 5
+
+- name: Start mongod service
+  service:
+    name: "{{ mongod_service }}"
+    state: started
+    enabled: yes
+
+- name: Install Python Pip
+  package:
+    name: python-pip
+    state: present
+
+- name: Install pymongo library
+  pip:
+    name: pymongo
+
+- name: Create MongoDB root user
+  mongodb_user:
+    login_port: "27017"
+    database: "admin"
+    name: "{{ mongodb_admin_user }}"
+    password: "{{ mongodb_admin_password }}"
+    roles: "root"
+
+- name: Copy config file
+  template:
+    src: "mongod.conf.j2"
+    dest: /etc/mongod.conf
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_group }}"
+  notify:
+    - Restart mongod service
