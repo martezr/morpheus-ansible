@@ -43,6 +43,11 @@
     name: python-pip
     state: present
 
+- name: Install Python3
+  package:
+    name: python3
+    state: present
+
 - name: Install pymongo library
   pip:
     name: pymongo
