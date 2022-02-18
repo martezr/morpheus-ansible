@@ -33,6 +33,11 @@
     state: started
     enabled: yes
 
+- name: Install EPEL Release
+  package:
+    name: epel-release
+    state: present
+
 - name: Install Python Pip
   package:
     name: python-pip
