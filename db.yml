@@ -3,13 +3,13 @@
   gather_facts: true
 
   tasks:
-  - name: Include the mongodb role
-    include_role:
-      name: mongodb
-    vars:
-      mongodb_version: "{{ morpheus['customOptions']['mongodb_version'] }}"
-      mongodb_admin_user: "{{ morpheus['customOptions']['mongodb_username'] }}"
-      mongodb_admin_password: "{{ morpheus['customOptions']['mongodb_password'] }}"
+#  - name: Include the mongodb role
+#    include_role:
+#      name: mongodb
+#    vars:
+#      mongodb_version: "{{ morpheus['customOptions']['mongodb_version'] }}"
+#      mongodb_admin_user: "{{ morpheus['customOptions']['mongodb_username'] }}"
+#      mongodb_admin_password: "{{ morpheus['customOptions']['mongodb_password'] }}"
   - name: Include DataDog role
     include_role:
       name: datadog.datadog
