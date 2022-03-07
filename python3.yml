@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+  - name: Install Python Pip
+    package:
+      name: python3-pip
+      state: present
+
+  - name: Install Python3
+    package:
+      name: python3
+      state: present
