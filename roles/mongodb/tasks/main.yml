@@ -51,6 +51,7 @@
 - name: Install pymongo library
   pip:
     name: pymongo
+    executable: pip3
 
 - name: Create MongoDB root user
   mongodb_user:
