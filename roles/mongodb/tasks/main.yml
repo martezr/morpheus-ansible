@@ -20,7 +20,7 @@
   retries: 5
 
 - name: Install MongoDB Packages
-  package:
+  dnf:
     name: "mongodb-org"
     state: present
   register: _pkg
@@ -34,17 +34,17 @@
     enabled: yes
 
 - name: Install EPEL Release
-  package:
+  dnf:
     name: epel-release
     state: present
 
 - name: Install Python Pip
-  package:
+  dnf:
     name: python-pip
     state: present
 
 - name: Install Python3
-  package:
+  dnf:
     name: python3
     state: present
 
