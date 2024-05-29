@@ -11,6 +11,7 @@
         name: nginx
         state: latest
         update_cache: yes
+        lock_timeout: 360
     - name: Download index.html
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/martezr/github-actions-tech-brief/main/index.html
