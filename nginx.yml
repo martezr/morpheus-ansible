@@ -13,7 +13,7 @@
         update_cache: yes
     - name: Download index.html
       ansible.builtin.get_url:
-        url: https://raw.githubusercontent.com/martezr/morpheus-ansible/master/index.html
+        url: https://raw.githubusercontent.com/martezr/github-actions-tech-brief/main/index.html
         dest: /var/www/html/index.html
         mode: '0440'
     - name: Restart Nginx
