@@ -1,0 +1,22 @@
+---
+- name: Install
+  gather_facts: false
+  hosts: all
+  #  become: true
+  #  Do not assume root, to execute playbooks over command bus
+  connection: local
+  tasks:
+    - name: Apt Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+    - name: Download index.html
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/martezr/morpheus-ansible/master/index.html
+        dest: /var/www/html/index.html
+        mode: '0440'
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
