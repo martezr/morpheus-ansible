@@ -13,10 +13,10 @@
       name: python3
       state: present
 
-- name: Install specified python requirements and custom Index URL
-  ansible.builtin.pip:
-    name:
-      - torch
-      - torchvision
-      - torchaudio
-    extra_args: -i https://download.pytorch.org/whl/cpu
+  - name: Install specified python requirements and custom Index URL
+    ansible.builtin.pip:
+      name:
+        - torch
+        - torchvision
+        - torchaudio
+      extra_args: -i https://download.pytorch.org/whl/cpu
