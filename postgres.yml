@@ -8,6 +8,10 @@
       with_items:
         - postgresql
         - postgresql-contrib
+    - name: Install Python Pip
+      package:
+        name: python3-pip
+        state: present
 
     - name: "Install Python packages"
       pip: "name={{ item }}  state=present"
