@@ -23,27 +23,43 @@
       service: "name={{ item }} state=started enabled=yes"
       with_items:
         - postgresql
+        
+    - name: set postgresql listen addresses
+      block:
+      - name: get postgresql listen addresses
+        set_fact:
+          pgdg_ip_addresses: "{{ ansible_default_ipv4.address }}, localhost"
+    
+      - name: configure postgresql listen addresses
+        lineinfile:
+          dest: "/etc/postgresql/14/main/postgresql.conf"
+          regexp: "^#?listen_addresses.+$"
+          line: "listen_addresses = '{{ pgdg_ip_addresses }}'"
+          state: present
+          mode: 0600
+        notify: restart postgres
+      when: listen_addresses_host_ip
 
     - name: "Create app database"
       postgresql_db:
         state: present
-        name: "{{ db_name }}"
+        name: "demodb"
       become: yes
       become_user: postgres
 
     - name: "Create db user"
       postgresql_user:
         state: present
-        name: "{{ db_user }}"
-        password: "{{ db_password }}"
+        name: "demouser"
+        password: "demodb"
       become: yes
       become_user: postgres
 
     - name: "Grant db user access to app db"
       postgresql_privs:
         type: database
-        database: "{{ db_name }}"
-        roles: "{{ db_user }}"
+        database: "demodb"
+        roles: "demouser"
         grant_option: no
         privs: all
       become: yes
@@ -55,7 +71,7 @@
         contype: host
         databases: all
         method: md5
-        users: "{{ db_user }}"
+        users: "demouser"
         create: true
       become: yes
       become_user: postgres
