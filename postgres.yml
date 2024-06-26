@@ -38,7 +38,6 @@
           state: present
           mode: 0600
         notify: restart postgres
-      when: listen_addresses_host_ip
 
     - name: "Create app database"
       postgresql_db:
