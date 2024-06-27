@@ -1,0 +1,6 @@
+---
+roles:
+  - name: morpheus_aio
+    src: https://github.com/gomorpheus/ansible-role-morpheus
+    version: master
+    scm: git
