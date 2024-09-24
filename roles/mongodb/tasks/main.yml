@@ -2,13 +2,13 @@
 # tasks file for mongodb
 - name: Add mongodb.org gpgkey
   ansible.builtin.apt_key:
-    url: https://www.mongodb.org/static/pgp/server-7.0.asc
+    url: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
     state: present
   retries: 5
 
 - name: Add specified repository into sources list
   ansible.builtin.apt_repository:
-    repo: deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse
+    repo: deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/{{ mongodb_version }} multiverse
     state: present
 
 - name: Install MongoDB Packages
@@ -44,11 +44,11 @@
 #    password: "{{ mongodb_admin_password }}"
 #    roles: "root"
 
-#- name: Copy config file
-#  template:
-#    src: "mongod.conf.j2"
-#    dest: /etc/mongod.conf
-#    owner: "{{ mongodb_user }}"
-#    group: "{{ mongodb_group }}"
-#  notify:
-#    - Restart mongod service
+- name: Copy config file
+  template:
+    src: "mongod.conf.j2"
+    dest: /etc/mongod.conf
+    owner: "{{ mongodb_user }}"
+    group: "{{ mongodb_group }}"
+  notify:
+    - Restart mongod service
