@@ -2,8 +2,8 @@
 # defaults file for mongodb
 bind_ip: 0.0.0.0
 config_port: 27017
-mongodb_user: "mongod"
-mongodb_group: "mongod"
+mongodb_user: "mongodb"
+mongodb_group: "mongodb"
 mongod_service: "mongod"
 db_path: /var/lib/mongo
 mongodb_admin_user: root
