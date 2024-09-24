@@ -5,7 +5,7 @@ config_port: 27017
 mongodb_user: "mongodb"
 mongodb_group: "mongodb"
 mongod_service: "mongod"
-db_path: /var/lib/mongo
+db_path: /var/lib/mongodb
 mongodb_admin_user: root
 mongodb_admin_password: password123
 mongodb_version: "7.0"
